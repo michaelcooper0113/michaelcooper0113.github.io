@@ -1,0 +1,1197 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">  
+    <meta name="apple-mobile-web-app-capable" content="yes">  
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">  
+    <meta name="theme-color" content="#0f172a">  
+    <meta name="mobile-web-app-capable" content="yes">  
+    <title>Hospital Directory</title>  
+    <link rel="preconnect" href="https://fonts.googleapis.com">  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">  
+    <style>  
+        :root {  
+            --primary: #0f172a;  
+            --primary-light: #1e293b;  
+            --accent: #3b82f6;  
+            --accent-dark: #2563eb;  
+            --accent-glow: rgba(59, 130, 246, 0.15);  
+            --success: #10b981;  
+            --success-bg: #ecfdf5;  
+            --success-border: #a7f3d0;  
+            --warning: #f59e0b;  
+            --warning-bg: #fffbeb;  
+            --warning-border: #fde68a;  
+            --danger: #ef4444;  
+            --bg: #f1f5f9;  
+            --bg-alt: #e2e8f0;  
+            --card: #ffffff;  
+            --card-hover: #f8fafc;  
+            --text: #0f172a;  
+            --text-secondary: #475569;  
+            --text-muted: #94a3b8;  
+            --border: #e2e8f0;  
+            --border-light: #f1f5f9;  
+            --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);  
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);  
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);  
+            --shadow-lg: 0 10px 25px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.04);  
+            --shadow-xl: 0 20px 40px -5px rgba(0,0,0,0.15);  
+            --radius-sm: 8px;  
+            --radius: 12px;  
+            --radius-lg: 16px;  
+            --radius-xl: 20px;  
+            --radius-full: 9999px;  
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;  
+            --h1-color: #1e40af;  
+            --h1-bg: #dbeafe;  
+            --h1-bg-subtle: #eff6ff;  
+            --h1-border: #93c5fd;  
+            --h1-gradient: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);  
+            --h2-color: #065f46;  
+            --h2-bg: #d1fae5;  
+            --h2-bg-subtle: #ecfdf5;  
+            --h2-border: #6ee7b7;  
+            --h2-gradient: linear-gradient(135deg, #065f46 0%, #10b981 100%);  
+            --ext-color: #2563eb;  
+            --ext-bg: #eff6ff;  
+            --ext-border: #bfdbfe;  
+            --phone-color: #059669;  
+            --phone-bg: #ecfdf5;  
+            --phone-border: #a7f3d0;  
+            --pager-color: #d97706;  
+            --pager-bg: #fffbeb;  
+            --pager-border: #fde68a;  
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }  
+        *::before, *::after { box-sizing: border-box; }
+
+        html {  
+            scroll-behavior: smooth;  
+            -webkit-text-size-adjust: 100%;  
+            -webkit-tap-highlight-color: transparent;  
+        }
+
+        body {  
+            font-family: var(--font);  
+            background: var(--bg);  
+            color: var(--text);  
+            min-height: 100vh;  
+            min-height: 100dvh;  
+            -webkit-font-smoothing: antialiased;  
+            -moz-osx-font-smoothing: grayscale;  
+            overflow-x: hidden;  
+        }
+
+        /* ============ HEADER ============ */  
+        .header {  
+            background: var(--primary);  
+            position: sticky;  
+            top: 0;  
+            z-index: 100;  
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);  
+        }
+
+        .header-inner {  
+            max-width: 900px;  
+            margin: 0 auto;  
+            padding: 0 16px;  
+        }
+
+        .header-top {  
+            display: flex;  
+            align-items: center;  
+            justify-content: space-between;  
+            padding: 14px 0 12px;  
+        }
+
+        .brand {  
+            display: flex;  
+            align-items: center;  
+            gap: 10px;  
+        }
+
+        .brand-icon {  
+            width: 40px;  
+            height: 40px;  
+            background: rgba(255,255,255,0.1);  
+            border: 1px solid rgba(255,255,255,0.08);  
+            border-radius: var(--radius-sm);  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            font-size: 20px;  
+        }
+
+        .brand-text h1 {  
+            font-size: 18px;  
+            font-weight: 800;  
+            color: white;  
+            letter-spacing: -0.3px;  
+            line-height: 1.2;  
+        }
+
+        .brand-text span {  
+            font-size: 11px;  
+            color: rgba(255,255,255,0.5);  
+            font-weight: 500;  
+        }
+
+        .live-counter {  
+            display: flex;  
+            align-items: center;  
+            gap: 7px;  
+            background: rgba(255,255,255,0.08);  
+            border: 1px solid rgba(255,255,255,0.1);  
+            border-radius: var(--radius-full);  
+            padding: 6px 14px;  
+            font-size: 13px;  
+            font-weight: 600;  
+            color: rgba(255,255,255,0.9);  
+        }
+
+        .live-dot {  
+            width: 8px;  
+            height: 8px;  
+            border-radius: 50%;  
+            background: #22c55e;  
+            animation: pulse 2s ease-in-out infinite;  
+        }
+
+        @keyframes pulse {  
+            0%, 100% { opacity: 1; transform: scale(1); }  
+            50% { opacity: 0.5; transform: scale(0.85); }  
+        }
+
+        /* ============ SEARCH ============ */  
+        .search-wrap {  
+            position: relative;  
+            padding-bottom: 10px;  
+        }
+
+        .search-icon-left {  
+            position: absolute;  
+            left: 14px;  
+            top: 50%;  
+            transform: translateY(calc(-50% - 5px));  
+            color: var(--text-muted);  
+            pointer-events: none;  
+            display: flex;  
+        }
+
+        .search-icon-left svg { width: 18px; height: 18px; }
+
+        #searchInput {  
+            width: 100%;  
+            height: 48px;  
+            padding: 0 90px 0 44px;  
+            background: rgba(255,255,255,0.95);  
+            border: 2px solid transparent;  
+            border-radius: var(--radius-full);  
+            font-family: var(--font);  
+            font-size: 16px;  
+            font-weight: 500;  
+            color: var(--text);  
+            outline: none;  
+            transition: all 0.2s ease;  
+            -webkit-appearance: none;  
+            appearance: none;  
+        }
+
+        #searchInput::placeholder { color: var(--text-muted); font-weight: 400; }
+
+        #searchInput:focus {  
+            background: white;  
+            border-color: var(--accent);  
+            box-shadow: 0 0 0 4px var(--accent-glow), var(--shadow-md);  
+        }
+
+        .search-right {  
+            position: absolute;  
+            right: 6px;  
+            top: 50%;  
+            transform: translateY(calc(-50% - 5px));  
+            display: flex;  
+            align-items: center;  
+            gap: 4px;  
+        }
+
+        .btn-clear {  
+            width: 32px;  
+            height: 32px;  
+            border-radius: 50%;  
+            border: none;  
+            background: var(--bg-alt);  
+            color: var(--text-secondary);  
+            font-size: 16px;  
+            cursor: pointer;  
+            display: none;  
+            align-items: center;  
+            justify-content: center;  
+            transition: 0.15s;  
+            font-family: var(--font);  
+        }
+
+        .btn-clear:hover { background: #cbd5e1; }  
+        .btn-clear.visible { display: flex; }
+
+        .kbd {  
+            font-size: 11px;  
+            color: rgba(255,255,255,0.3);  
+            background: rgba(255,255,255,0.06);  
+            border: 1px solid rgba(255,255,255,0.08);  
+            padding: 2px 8px;  
+            border-radius: 6px;  
+            font-weight: 600;  
+            font-family: var(--font);  
+        }
+
+        /* ============ TABS & FILTERS ============ */  
+        .tab-row {  
+            display: flex;  
+            gap: 6px;  
+            padding-bottom: 8px;  
+        }
+
+        .tab-btn {  
+            flex: 1;  
+            display: flex;  
+            flex-direction: column;  
+            align-items: center;  
+            gap: 2px;  
+            padding: 10px 4px 8px;  
+            border-radius: var(--radius);  
+            border: 1.5px solid rgba(255,255,255,0.1);  
+            background: rgba(255,255,255,0.04);  
+            color: rgba(255,255,255,0.65);  
+            font-family: var(--font);  
+            font-size: 11px;  
+            font-weight: 700;  
+            text-transform: uppercase;  
+            letter-spacing: 0.3px;  
+            cursor: pointer;  
+            transition: all 0.2s;  
+            line-height: 1.3;  
+            user-select: none;  
+            -webkit-user-select: none;  
+        }
+
+        .tab-btn:hover { background: rgba(255,255,255,0.08); }
+
+        .tab-btn.active {  
+            background: white;  
+            color: var(--primary);  
+            border-color: white;  
+            box-shadow: var(--shadow-md);  
+        }
+
+        .tab-btn .tab-emoji { font-size: 18px; line-height: 1; }  
+        .tab-btn .tab-count {  
+            font-size: 10px;  
+            font-weight: 500;  
+            opacity: 0.6;  
+        }
+
+        .filter-row {  
+            display: flex;  
+            gap: 6px;  
+            padding-bottom: 12px;  
+            overflow-x: auto;  
+            -webkit-overflow-scrolling: touch;  
+            scrollbar-width: none;  
+        }  
+        .filter-row::-webkit-scrollbar { display: none; }
+
+        .filter-btn {  
+            flex-shrink: 0;  
+            padding: 7px 14px;  
+            border-radius: var(--radius-full);  
+            border: 1.5px solid rgba(255,255,255,0.1);  
+            background: rgba(255,255,255,0.05);  
+            color: rgba(255,255,255,0.75);  
+            font-family: var(--font);  
+            font-size: 12px;  
+            font-weight: 600;  
+            cursor: pointer;  
+            transition: all 0.2s;  
+            white-space: nowrap;  
+            user-select: none;  
+            -webkit-user-select: none;  
+        }
+
+        .filter-btn:hover { background: rgba(255,255,255,0.1); }
+
+        .filter-btn.active {  
+            background: white;  
+            color: var(--primary);  
+            border-color: white;  
+            box-shadow: var(--shadow-sm);  
+        }
+
+        /* ============ MAIN ============ */  
+        .main {  
+            max-width: 900px;  
+            margin: 0 auto;  
+            padding: 12px 16px 120px;  
+        }
+
+        /* ============ STATS ============ */  
+        .stats-grid {  
+            display: grid;  
+            grid-template-columns: repeat(3, 1fr);  
+            gap: 8px;  
+            margin-bottom: 16px;  
+        }
+
+        .stat-card {  
+            background: var(--card);  
+            border: 1px solid var(--border);  
+            border-radius: var(--radius);  
+            padding: 14px 8px;  
+            text-align: center;  
+            box-shadow: var(--shadow-xs);  
+        }
+
+        .stat-number {  
+            font-size: 26px;  
+            font-weight: 900;  
+            line-height: 1;  
+            letter-spacing: -0.5px;  
+        }
+
+        .stat-number.c-blue { color: var(--ext-color); }  
+        .stat-number.c-green { color: var(--phone-color); }  
+        .stat-number.c-amber { color: var(--pager-color); }
+
+        .stat-label {  
+            font-size: 10px;  
+            font-weight: 700;  
+            text-transform: uppercase;  
+            letter-spacing: 0.5px;  
+            color: var(--text-muted);  
+            margin-top: 4px;  
+        }
+
+        /* ============ HOSPITAL SECTIONS ============ */  
+        .hospital-group { margin-bottom: 12px; }
+
+        .hospital-divider {  
+            display: flex;  
+            align-items: center;  
+            gap: 10px;  
+            padding: 10px 0 6px;  
+            position: sticky;  
+            top: 155px;  
+            z-index: 10;  
+            background: var(--bg);  
+        }
+
+        .hospital-divider::after {  
+            content: '';  
+            flex: 1;  
+            height: 2px;  
+            border-radius: 1px;  
+        }
+
+        .hospital-divider.h1::after { background: var(--h1-border); opacity: 0.4; }  
+        .hospital-divider.h2::after { background: var(--h2-border); opacity: 0.4; }
+
+        .hosp-badge {  
+            display: inline-flex;  
+            align-items: center;  
+            gap: 8px;  
+            padding: 6px 16px;  
+            border-radius: var(--radius-full);  
+            font-size: 13px;  
+            font-weight: 700;  
+            white-space: nowrap;  
+        }
+
+        .hosp-badge.h1 {  
+            background: var(--h1-bg);  
+            color: var(--h1-color);  
+            border: 1px solid var(--h1-border);  
+        }
+
+        .hosp-badge.h2 {  
+            background: var(--h2-bg);  
+            color: var(--h2-color);  
+            border: 1px solid var(--h2-border);  
+        }
+
+        .hosp-count {  
+            font-size: 12px;  
+            color: var(--text-muted);  
+            font-weight: 500;  
+            white-space: nowrap;  
+        }
+
+        /* ============ ALPHABET INDEX ============ */  
+        .alpha-bar {  
+            display: flex;  
+            flex-wrap: wrap;  
+            gap: 3px;  
+            margin-bottom: 12px;  
+            padding: 8px 10px;  
+            background: var(--card);  
+            border: 1px solid var(--border);  
+            border-radius: var(--radius);  
+            box-shadow: var(--shadow-xs);  
+        }
+
+        .alpha-btn {  
+            width: 28px;  
+            height: 28px;  
+            border-radius: 6px;  
+            border: none;  
+            background: transparent;  
+            color: var(--text-muted);  
+            font-family: var(--font);  
+            font-size: 11px;  
+            font-weight: 700;  
+            cursor: pointer;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            transition: 0.15s;  
+        }
+
+        .alpha-btn:hover { background: var(--bg); color: var(--text); }  
+        .alpha-btn.has-entries { color: var(--accent); }  
+        .alpha-btn.active { background: var(--accent); color: white; }
+
+        /* ============ LETTER GROUP ============ */  
+        .letter-header {  
+            display: flex;  
+            align-items: center;  
+            gap: 10px;  
+            padding: 8px 0 4px;  
+        }
+
+        .letter-circle {  
+            width: 32px;  
+            height: 32px;  
+            border-radius: 50%;  
+            background: var(--accent);  
+            color: white;  
+            font-size: 14px;  
+            font-weight: 800;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+        }
+
+        .letter-count {  
+            font-size: 12px;  
+            color: var(--text-muted);  
+            font-weight: 500;  
+        }
+
+        .letter-line {  
+            flex: 1;  
+            height: 1px;  
+            background: var(--border);  
+        }
+
+        /* ============ ENTRY CARDS ============ */  
+        .entries-list { display: flex; flex-direction: column; gap: 3px; margin-bottom: 8px; }
+
+        .entry {  
+            background: var(--card);  
+            border: 1px solid var(--border);  
+            border-radius: var(--radius);  
+            padding: 12px 14px;  
+            display: flex;  
+            align-items: center;  
+            gap: 12px;  
+            cursor: pointer;  
+            transition: all 0.15s ease;  
+            position: relative;  
+            overflow: hidden;  
+        }
+
+        .entry::before {  
+            content: '';  
+            position: absolute;  
+            left: 0;  
+            top: 0;  
+            bottom: 0;  
+            width: 3px;  
+        }
+
+        .entry.t-ext::before { background: var(--ext-color); }  
+        .entry.t-phone::before { background: var(--phone-color); }  
+        .entry.t-pager::before { background: var(--pager-color); }
+
+        .entry:hover {  
+            border-color: var(--accent);  
+            box-shadow: var(--shadow-md);  
+            transform: translateY(-1px);  
+        }
+
+        .entry:active { transform: scale(0.995); }
+
+        .entry.flash-copied {  
+            background: var(--success-bg) !important;  
+            border-color: var(--success-border) !important;  
+        }
+
+        .entry-icon-box {  
+            width: 42px;  
+            height: 42px;  
+            border-radius: 10px;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            font-size: 20px;  
+            flex-shrink: 0;  
+        }
+
+        .entry-icon-box.t-ext { background: var(--ext-bg); }  
+        .entry-icon-box.t-phone { background: var(--phone-bg); }  
+        .entry-icon-box.t-pager { background: var(--pager-bg); }
+
+        .entry-body { flex: 1; min-width: 0; }
+
+        .entry-name {  
+            font-size: 14px;  
+            font-weight: 600;  
+            color: var(--text);  
+            line-height: 1.3;  
+            word-break: break-word;  
+        }
+
+        .entry-tags {  
+            display: flex;  
+            align-items: center;  
+            gap: 5px;  
+            margin-top: 3px;  
+            flex-wrap: wrap;  
+        }
+
+        .tag {  
+            font-size: 10px;  
+            font-weight: 700;  
+            text-transform: uppercase;  
+            letter-spacing: 0.3px;  
+            padding: 2px 7px;  
+            border-radius: var(--radius-full);  
+            line-height: 1.4;  
+        }
+
+        .tag.t-ext { background: var(--ext-bg); color: var(--ext-color); }  
+        .tag.t-phone { background: var(--phone-bg); color: var(--phone-color); }  
+        .tag.t-pager { background: var(--pager-bg); color: var(--pager-color); }
+
+        .tag-hosp {  
+            font-size: 9px;  
+            font-weight: 600;  
+            color: var(--text-muted);  
+            background: var(--border-light);  
+            padding: 2px 6px;  
+            border-radius: 4px;  
+        }
+
+        .entry-end {  
+            display: flex;  
+            align-items: center;  
+            gap: 6px;  
+            flex-shrink: 0;  
+        }
+
+        .entry-value {  
+            font-size: 15px;  
+            font-weight: 700;  
+            color: var(--accent-dark);  
+            font-variant-numeric: tabular-nums;  
+            text-align: right;  
+            max-width: 120px;  
+            word-break: break-all;  
+            line-height: 1.2;  
+        }
+
+        .entry.flash-copied .entry-value { color: var(--success); }
+
+        .copy-hint {  
+            width: 28px;  
+            height: 28px;  
+            border-radius: 7px;  
+            background: var(--accent-glow);  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            flex-shrink: 0;  
+            opacity: 0;  
+            transition: 0.2s;  
+        }
+
+        .copy-hint svg { width: 13px; height: 13px; color: var(--accent); }  
+        .entry:hover .copy-hint { opacity: 1; }
+
+        .fav-star {  
+            background: none;  
+            border: none;  
+            font-size: 15px;  
+            cursor: pointer;  
+            padding: 3px;  
+            opacity: 0.15;  
+            transition: 0.15s;  
+            flex-shrink: 0;  
+            line-height: 1;  
+            -webkit-user-select: none;  
+            user-select: none;  
+        }
+
+        .fav-star.on { opacity: 1; }  
+        .fav-star:hover { opacity: 0.5; transform: scale(1.1); }
+
+        /* ============ EMPTY STATE ============ */  
+        .empty {  
+            text-align: center;  
+            padding: 50px 24px;  
+        }
+
+        .empty-circle {  
+            width: 72px;  
+            height: 72px;  
+            border-radius: 50%;  
+            background: var(--bg-alt);  
+            margin: 0 auto 14px;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            font-size: 28px;  
+        }
+
+        .empty h3 { font-size: 17px; font-weight: 700; margin-bottom: 4px; }  
+        .empty p { font-size: 13px; color: var(--text-muted); line-height: 1.5; max-width: 280px; margin: 0 auto; }
+
+        /* ============ TOAST ============ */  
+        .toast {  
+            position: fixed;  
+            bottom: 32px;  
+            left: 50%;  
+            transform: translateX(-50%) translateY(100px);  
+            background: var(--primary);  
+            color: white;  
+            padding: 11px 22px;  
+            border-radius: var(--radius-full);  
+            font-size: 14px;  
+            font-weight: 600;  
+            box-shadow: var(--shadow-xl);  
+            z-index: 300;  
+            opacity: 0;  
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);  
+            pointer-events: none;  
+            white-space: nowrap;  
+            font-family: var(--font);  
+        }
+
+        .toast.visible {  
+            opacity: 1;  
+            transform: translateX(-50%) translateY(0);  
+        }
+
+        /* ============ SCROLL TOP ============ */  
+        .scroll-top {  
+            position: fixed;  
+            bottom: 32px;  
+            right: 16px;  
+            width: 46px;  
+            height: 46px;  
+            border-radius: 50%;  
+            background: var(--accent);  
+            color: white;  
+            border: none;  
+            cursor: pointer;  
+            box-shadow: var(--shadow-lg);  
+            z-index: 50;  
+            opacity: 0;  
+            visibility: hidden;  
+            transform: translateY(12px);  
+            transition: all 0.25s ease;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+        }
+
+        .scroll-top.visible {  
+            opacity: 1;  
+            visibility: visible;  
+            transform: translateY(0);  
+        }
+
+        .scroll-top:hover { background: #1d4ed8; transform: translateY(-2px); }  
+        .scroll-top svg { width: 20px; height: 20px; }
+
+        /* ============ MARK ============ */  
+        mark {  
+            background: #fef08a;  
+            color: inherit;  
+            padding: 1px 2px;  
+            border-radius: 3px;  
+            font-weight: inherit;  
+        }
+
+        /* ============ RESPONSIVE ============ */  
+        @media (min-width: 640px) {  
+            .header-inner { padding: 0 24px; }  
+            .main { padding: 16px 24px 120px; }  
+            .brand-text h1 { font-size: 20px; }  
+            .entries-list { gap: 4px; }  
+            .entry { padding: 14px 16px; }
+
+            .two-col {  
+                display: grid;  
+                grid-template-columns: 1fr 1fr;  
+                gap: 4px;  
+            }  
+        }
+
+        @media (max-width: 380px) {  
+            .brand-text h1 { font-size: 16px; }  
+            .brand-icon { width: 36px; height: 36px; font-size: 18px; }  
+            .live-counter { font-size: 11px; padding: 4px 10px; }  
+            .tab-btn { font-size: 10px; padding: 8px 2px 6px; }  
+            .tab-btn .tab-emoji { font-size: 16px; }  
+            .filter-btn { font-size: 11px; padding: 6px 10px; }  
+            .entry-name { font-size: 13px; }  
+            .entry-value { font-size: 13px; max-width: 95px; }  
+            .entry-icon-box { width: 38px; height: 38px; font-size: 17px; }  
+        }
+
+        /* ============ DARK MODE ============ */  
+        @media (prefers-color-scheme: dark) {  
+            :root {  
+                --bg: #0c1222;  
+                --bg-alt: #1e293b;  
+                --card: #162032;  
+                --card-hover: #1c2842;  
+                --text: #e2e8f0;  
+                --text-secondary: #94a3b8;  
+                --text-muted: #64748b;  
+                --border: #253350;  
+                --border-light: #1e293b;  
+                --ext-bg: rgba(37,99,235,0.12);  
+                --phone-bg: rgba(5,150,105,0.12);  
+                --pager-bg: rgba(217,119,6,0.12);  
+                --accent-glow: rgba(59,130,246,0.2);  
+                --h1-bg: rgba(30,64,175,0.2);  
+                --h1-bg-subtle: rgba(30,64,175,0.08);  
+                --h1-border: rgba(147,197,253,0.25);  
+                --h2-bg: rgba(6,95,70,0.2);  
+                --h2-bg-subtle: rgba(6,95,70,0.08);  
+                --h2-border: rgba(110,231,183,0.25);  
+                --success-bg: rgba(16,185,129,0.1);  
+                --success-border: rgba(110,231,183,0.25);  
+            }
+
+            #searchInput {  
+                background: rgba(22,32,50,0.95);  
+                color: var(--text);  
+            }  
+            #searchInput:focus { background: var(--card); }  
+            #searchInput::placeholder { color: var(--text-muted); }  
+            .btn-clear { background: var(--bg-alt); color: var(--text-muted); }  
+            mark { background: #854d0e; color: #fef08a; }  
+        }
+
+        @media print {  
+            .header { position: static; }  
+            .scroll-top, .toast, .fav-star, .copy-hint, .alpha-bar { display: none !important; }  
+            .entry { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }  
+        }  
+    </style>  
+</head>  
+<body>
+
+<!-- ========== HEADER ========== -->  
+<header class="header">  
+    <div class="header-inner">  
+        <div class="header-top">  
+            <div class="brand">  
+                <div class="brand-icon">🏥</div>  
+                <div class="brand-text">  
+                    <h1>Hospital Directory</h1>  
+                    <span>Tap any entry to copy</span>  
+                </div>  
+            </div>  
+            <div class="live-counter">  
+                <span class="live-dot"></span>  
+                <span id="liveCount">0 results</span>  
+            </div>  
+        </div>
+
+        <div class="search-wrap">  
+            <span class="search-icon-left">  
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>  
+            </span>  
+            <input type="text" id="searchInput" placeholder="Search by name, number, or type..." autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="search">  
+            <div class="search-right">  
+                <button class="btn-clear" id="clearBtn" aria-label="Clear search">✕</button>  
+                <span class="kbd" id="kbdHint">/</span>  
+            </div>  
+        </div>
+
+        <div class="tab-row" id="tabRow"></div>  
+        <div class="filter-row" id="filterRow"></div>  
+    </div>  
+</header>
+
+<!-- ========== MAIN ========== -->  
+<main class="main">  
+    <div class="stats-grid" id="statsGrid">  
+        <div class="stat-card"><div class="stat-number c-blue" id="statExt">0</div><div class="stat-label">Extensions</div></div>  
+        <div class="stat-card"><div class="stat-number c-green" id="statPhone">0</div><div class="stat-label">Phone Numbers</div></div>  
+        <div class="stat-card"><div class="stat-number c-amber" id="statPager">0</div><div class="stat-label">Pagers</div></div>  
+    </div>  
+    <div id="content"></div>  
+</main>
+
+<!-- ========== TOAST ========== -->  
+<div class="toast" id="toast"></div>
+
+<!-- ========== SCROLL TOP ========== -->  
+<button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">  
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>  
+</button>
+
+<script>  
+// ================================================================  
+//  DATA  
+// ================================================================  
+const DATA = {  
+    lij: {  
+        id: 'lij',  
+        name: 'LIJ Medical Center',  
+        short: 'LIJ',  
+        badge: 'h1',  
+        icon: '🏥',  
+        entries: []  
+    },  
+    nsuh: {  
+        id: 'nsuh',  
+        name: 'North Shore University Hospital',  
+        short: 'NSUH',  
+        badge: 'h2',  
+        icon: '🏥',  
+        entries: []  
+    }  
+};
+
+// LIJ entries  
+DATA.lij.entries = [  
+{t:"Extension",n:"Evs stat clean",v:"11530"},{t:"Phone number",n:"PICU Green",v:"14222"},{t:"Phone number",n:"8T tele",v:"65811"},{t:"Extension",n:"ED ANM",v:"10139"},{t:"Pager",n:"IV Nurse - Epic \"LIJ IV Midline Team\"",v:"0"},{t:"Phone number",n:"Uro res clinic",v:"5164958888"},{t:"Extension",n:"Autopsy",v:"7491"},{t:"Extension",n:"CCMC XR Intraop",v:"10833"},{t:"Phone number",n:"Admitting Fax",v:"17184706724"},{t:"Extension",n:"Dental Marilyn",v:"5955"},{t:"Phone number",n:"Diego",v:"4097"},{t:"Phone number",n:"ED THROUGHPUT",v:"10143"},{t:"Extension",n:"SICU Manager Robert",v:"11560"},{t:"Extension",n:"PICU Cohen",v:"3350"},{t:"Phone number",n:"PACU XR",v:"10733"},{t:"Extension",n:"Gyn Spectra",v:"11062"},{t:"Phone number",n:"Anesthesia tech float",v:"11036"},{t:"Phone number",n:"7S Nurse Manager",v:"14475"},{t:"Extension",n:"MICU ANM",v:"11562"},{t:"Extension",n:"Gol",v:"3071"},{t:"Extension",n:"Eli Teaching Center",v:"11786"},{t:"Extension",n:"Giacinto",v:"8732"},{t:"Extension",n:"Surg 2",v:"3201"},{t:"Phone number",n:"7 South ANM Gabby",v:"14655"},{t:"Extension",n:"ESSU Functional RN",v:"10599"},{t:"Extension",n:"SICU Bed 9 Nurse",v:"63129"},{t:"Extension",n:"SICU Bed 8 Nurse",v:"63128"},{t:"Extension",n:"SICU Bed 11/12/13 Nurse",v:"63131"},{t:"Extension",n:"SICU Bed 7 Nurse",v:"63127"},{t:"Extension",n:"SICU Bed 6 Nurse",v:"63126"},{t:"Phone number",n:"Resident Urology Clinic Desk",v:"5167348582"},{t:"Extension",n:"ACP Discharge Line",v:"5370"},{t:"Phone number",n:"Interventional Rads Office",v:"7232"},{t:"Extension",n:"GWYN ANM",v:"14474"},{t:"Extension",n:"OR 21",v:"61521"},{t:"Extension",n:"OR 20",v:"61520"},{t:"Extension",n:"OR 19",v:"61519"},{t:"Extension",n:"OR 18",v:"61518"},{t:"Extension",n:"OR 17",v:"61517"},{t:"Extension",n:"OR 16",v:"61516"},{t:"Extension",n:"OR 15",v:"61515"},{t:"Extension",n:"OR 14",v:"61514"},{t:"Extension",n:"OR 13",v:"61513"},{t:"Extension",n:"OR 12",v:"61512"},{t:"Extension",n:"OR 11",v:"61511"},{t:"Extension",n:"OR 10",v:"61510"},{t:"Extension",n:"OR 9",v:"61509"},{t:"Extension",n:"OR 8",v:"61508"},{t:"Extension",n:"OR 7",v:"61507"},{t:"Extension",n:"OR 6",v:"61506"},{t:"Extension",n:"OR 5",v:"61505"},{t:"Extension",n:"OR 4",v:"61504"},{t:"Extension",n:"OR 3",v:"61503"},{t:"Extension",n:"OR 2",v:"61502"},{t:"Extension",n:"OR 1",v:"61501"},{t:"Extension",n:"OR 22",v:"61522"},{t:"Extension",n:"Lab - Point Of Care",v:"7301"},{t:"Extension",n:"Jarred ICU ANM Nights",v:"14167"},{t:"Phone number",n:"Unit service coordinator ellen",v:"11836"},{t:"Extension",n:"***IR",v:"4719"},{t:"Extension",n:"Body CT Read/ Protocol MR",v:"4174"},{t:"Phone number",n:"Portable XRay SICU",v:"66171"},{t:"Extension",n:"RRT",v:"22"},{t:"Extension",n:"ESSU ANM",v:"10842"},{t:"Extension",n:"Respiratory Therapist",v:"10024"},{t:"Extension",n:"EVS",v:"7420"},{t:"Extension",n:"MICU Residents - Green",v:"10095"},{t:"Extension",n:"MICU Residents - Yellow",v:"10096"},{t:"Extension",n:"MICU Consult Attending",v:"11745"},{t:"Extension",n:"Acp supervisors",v:"14133"},{t:"Extension",n:"Cssu",v:"14414"},{t:"Phone number",n:"6MIC Pharmacist",v:"14428"},{t:"Phone number",n:"MICU ANM Karen/Sessan",v:"11562"},{t:"Extension",n:"Registration",v:"4300"},{t:"Extension",n:"CCU/RCU ANM Sarah, Brendan, Katya, Jarred",v:"14167"},{t:"Phone number",n:"Ed",v:"5164571254"},{t:"Extension",n:"Assistant Director Nursing",v:"11587"},{t:"Phone number",n:"ED",v:"5166873164"},{t:"Extension",n:"Ivan Transport Supervisor",v:"11355"},{t:"Extension",n:"CCU/RCU Mgr Siju",v:"10156"},{t:"Extension",n:"ACP supervisor",v:"14133"},{t:"Phone number",n:"9 Tower",v:"65915"},{t:"Extension",n:"CCU Night Attending",v:"14278"},{t:"Extension",n:"Peds ED",v:"4780"},{t:"Extension",n:"Rads Reading",v:"4173"},{t:"Phone number",n:"ED SW Night",v:"11722"},{t:"Phone number",n:"Wound Care Emily",v:"11436"},{t:"Phone number",n:"9 south ANM",v:"11494"},{t:"Phone number",n:"9 south NM Diedre",v:"11551"},{t:"Extension",n:"3 Pavilion",v:"3360"},{t:"Phone number",n:"ID Pharmacist Barbara",v:"13062"},{t:"Extension",n:"CCMC Med4",v:"3140"},{t:"Extension",n:"Cohens OR2",v:"62202"},{t:"Extension",n:"CCMC 3 CN",v:"3370"},{t:"Phone number",n:"Frank Vinci RN CM",v:"11371"},{t:"Extension",n:"Chronic Pain",v:"4262"},{t:"Phone number",n:"4S ANM",v:"14444"},{t:"Pager",n:"Neurosurgery Pager",v:"00059"},{t:"Phone number",n:"SPEECH",v:"10116"},{t:"Phone number",n:"CTICU ANM",v:"11828"},{t:"Phone number",n:"CTICU Manager",v:"11753"},{t:"Extension",n:"Dental",v:"7110"},{t:"Extension",n:"Critical Care Transport RN",v:"11733"},{t:"Extension",n:"IR Interventional Radiology",v:"4719"},{t:"Extension",n:"Peds PACU",v:"3201"},{t:"Extension",n:"4 T",v:"5401"},{t:"Extension",n:"Child Life",v:"3005"},{t:"Phone number",n:"SICU George",v:"13373"},{t:"Extension",n:"Patient Experience",v:"8792"},{t:"Extension",n:"Food & Nutrition",v:"63663"},{t:"Extension",n:"MICU - 6N ACP",v:"14247"},{t:"Extension",n:"MICU - ECMO",v:"14178"},{t:"Phone number",n:"Biomed for Sonosite or GE",v:"11860"},{t:"Phone number",n:"4S Manager Renee",v:"14084"},{t:"Phone number",n:"Lauren Ostuni",v:"11586"},{t:"Phone number",n:"SW Evening Daniela Diaz Or Teams M-F Till 8pm",v:"14419"},{t:"Extension",n:"Badge Office",v:"4311"},{t:"Phone number",n:"EEG Epilepsy Service After Hours",v:"5163257060"},{t:"Phone number",n:"EEG Reading Room",v:"5164651855"},{t:"Phone number",n:"ADN",v:"11587"},{t:"Phone number",n:"Heather Psych Tx SW",v:"13078"},{t:"Extension",n:"MICU Manager",v:"11561"},{t:"Phone number",n:"Critical Care Director/Molly",v:"11800"},{t:"Extension",n:"Idk",v:"14245"},{t:"Phone number",n:"Materials",v:"10698"},{t:"Extension",n:"Weekend Echo",v:"10059"},{t:"Extension",n:"ED Intake",v:"7547"},{t:"Extension",n:"Cohen's Neuroradiology Reading Room",v:"3787"},{t:"Extension",n:"Cohen's CT Technologist",v:"3763"},{t:"Phone number",n:"Med Rec Pharmacist",v:"10040"},{t:"Extension",n:"Engineering",v:"4115"},{t:"Phone number",n:"6N ANM SAM",v:"11310"},{t:"Extension",n:"Ethics Consult",v:"5840"},{t:"Phone number",n:"4N Manager Kristine",v:"11477"},{t:"Phone number",n:"RN CNM Karla 4T",v:"14266"},{t:"Phone number",n:"CTI Senior PA",v:"10501"},{t:"Pager",n:"Ortho",v:"00022"},{t:"Pager",n:"Pulmonary Consult",v:"86176"},{t:"Extension",n:"L&D Triage 3T",v:"14114"},{t:"Extension",n:"COVID, Flu-VID",v:"11775"},{t:"Extension",n:"Night Educator",v:"11505"},{t:"Extension",n:"Anesthesia Floor leader",v:"11019"},{t:"Pager",n:"Infection Control RN",v:"11842"},{t:"Extension",n:"EP Interrogation",v:"11877"},{t:"Extension",n:"Cardiology Consult",v:"1"},{t:"Phone number",n:"OB Educator",v:"11087"},{t:"Extension",n:"RT (right number)",v:"10207"},{t:"Phone number",n:"Mobile CCRN",v:"11557"},{t:"Extension",n:"MRI Peds Control Room With Anesthesia",v:"3786"},{t:"Extension",n:"Cathy case manager 4T",v:"14143"},{t:"Extension",n:"SICU PA/Resident",v:"11515"},{t:"Extension",n:"Cohen's OR",v:"4160"},{t:"Pager",n:"On Call Radiology",v:"06097"},{t:"Phone number",n:"SW Farhana",v:"11841"},{t:"Extension",n:"Vuong",v:"67935"},{t:"Phone number",n:"ZHH Admission/Transfer SW",v:"14588"},{t:"Phone number",n:"USA Nights",v:"11499"},{t:"Extension",n:"Materials 6S",v:"10548"},{t:"Extension",n:"Scrubs/Patrick Peart",v:"11544"},{t:"Extension",n:"Amanda Suleman/Patient Experience",v:"11882"},{t:"Extension",n:"Patient Experience/Abe",v:"11102"},{t:"Extension",n:"Patient Experience/Kenny",v:"10134"},{t:"Extension",n:"Critical Care Educator/Ronni",v:"14553"},{t:"Extension",n:"Critical Care Educator/Neeta",v:"14477"},{t:"Phone number",n:"Materials Coordinator",v:"11836"},{t:"Extension",n:"EHS",v:"7644"},{t:"Phone number",n:"Pain Service",v:"00539"},{t:"Phone number",n:"ED Behavioral Health",v:"7957"},{t:"Phone number",n:"PT Spectra",v:"14455"},{t:"Extension",n:"Ct Supervisor",v:"14189"},{t:"Extension",n:"ACP ED Hold Spectra",v:"7184131700"},{t:"Phone number",n:"Safe Patient Handling (Lou)",v:"13049"},{t:"Extension",n:"RCU ACP Or Fellow",v:"11452"},{t:"Extension",n:"Dietician",v:"65555"},{t:"Extension",n:"WSS PACU",v:"5105"},{t:"Extension",n:"Peds Reading Room",v:"60656"},{t:"Extension",n:"Peds Xray",v:"60312"},{t:"Extension",n:"Procedure Team",v:"00028"},{t:"Extension",n:"Pediatric Ultrasound",v:"10745"},{t:"Phone number",n:"SICU Assit Sydney",v:"13373"},{t:"Phone number",n:"MICU 6N Assit Katie",v:"11967"},{t:"Phone number",n:"CTICU Assit Caitlin",v:"11828"},{t:"Phone number",n:"Safe Patient Handling On Call",v:"13049"},{t:"Extension",n:"Volunteer",v:"7091"},{t:"Extension",n:"Cafeteria",v:"7588"},{t:"Phone number",n:"9S CM Marie Durand",v:"13244"},{t:"Extension",n:"MRI Expedite Supervisor John",v:"14190"},{t:"Extension",n:"X-ray Tech",v:"66180"},{t:"Pager",n:"Dietician 7S",v:"06389"},{t:"Phone number",n:"Back Elevatir",v:"60540"},{t:"Extension",n:"Supplies Manager",v:"11643"},{t:"Extension",n:"Food Services",v:"7590"},{t:"Extension",n:"X-ray Tech",v:"66171"},{t:"Extension",n:"Pager Switch",v:"4961"},{t:"Phone number",n:"Chemo Nurse",v:"11582"},{t:"Extension",n:"Midline nurse",v:"06205"},{t:"Extension",n:"Palliative Care Office",v:"8660"},{t:"Extension",n:"5S SW",v:"11043"},{t:"Extension",n:"9S SW DJ",v:"14595"},{t:"Phone number",n:"CT Supervisor Kim",v:"14189"},{t:"Extension",n:"9N SW Jordana",v:"14563"},{t:"Extension",n:"ED Charge nurse",v:"10143"},{t:"Phone number",n:"9N CM Susan",v:"14559"},{t:"Extension",n:"9 North",v:"7890"},{t:"Extension",n:"Essu Lauren",v:"11182"},{t:"Phone number",n:"Ronnie Biomed",v:"11859"},{t:"Phone number",n:"RT",v:"7680"},{t:"Extension",n:"Stress Lab",v:"7339"},{t:"Extension",n:"IR Charge RN",v:"4123"},{t:"Extension",n:"Structural Heart",v:"77377"},{t:"Extension",n:"Mri Try First",v:"4065"},{t:"Extension",n:"Safe Patient Handling (Regina)",v:"13049"},{t:"Extension",n:"4 North",v:"7840"},{t:"Extension",n:"8 South",v:"7980"},{t:"Extension",n:"Radiology Reading Room",v:"4177"},{t:"Extension",n:"ED X-ray",v:"60701"},{t:"Extension",n:"Ortho",v:"11536"},{t:"Extension",n:"Same Day",v:"7975"},{t:"Extension",n:"ZHH Methadone Clinic",v:"8940"},{t:"Phone number",n:"Pediatric MRI",v:"3751"},{t:"Extension",n:"Wound Care Milana",v:"13354"},{t:"Extension",n:"Lab Heme",v:"3050"},{t:"Phone number",n:"Wound Care Alyssa",v:"11426"},{t:"Phone number",n:"Zenia Miller",v:"13059"},{t:"Extension",n:"Echo Lab",v:"7242"},{t:"Extension",n:"Zenia Miller",v:"7072"},{t:"Phone number",n:"Janis (EP Team) Spectra",v:"11622"},{t:"Phone number",n:"Lili Zhu (EP Team NP)",v:"11621"},{t:"Phone number",n:"Zhen Zhu(EP Team NP)",v:"11624"},{t:"Phone number",n:"Shridevi Persad (EP Team PA)",v:"13053"},{t:"Phone number",n:"Moussa Saleh MD EP",v:"11989"},{t:"Extension",n:"Haisam Ismail, MD EP",v:"11893"},{t:"Phone number",n:"Anesthesia",v:"7390"},{t:"Extension",n:"Chaplain",v:"8693"},{t:"Extension",n:"Katz Main Lobby/Concierge",v:"5132"},{t:"Extension",n:"ED CT (new Scanner)",v:"7031"},{t:"Extension",n:"Patient Experience Patricia Daly",v:"4996"},{t:"Phone number",n:"7S CM Brandy",v:"11469"},{t:"Phone number",n:"Orthotist Harry watnick",v:"5166552157"},{t:"Phone number",n:"Medicine Clinic",v:"9292927000"},{t:"Phone number",n:"BERT",v:"10144"},{t:"Extension",n:"ASU",v:"8434"},{t:"Extension",n:"Bronch Suite",v:"7069"},{t:"Extension",n:"ED Portable XR (Adult)",v:"60701"},{t:"Phone number",n:"Dr Barrera",v:"11513"},{t:"Phone number",n:"Jenny SW Psych Tx",v:"14588"},{t:"Pager",n:"Respiratory Tech",v:"06509"},{t:"Extension",n:"Felicia (SocialWork)",v:"60891"},{t:"Extension",n:"IT Help Desk",v:"5164707272"},{t:"Extension",n:"Dr. Lau. Cardiology",v:"11335"},{t:"Extension",n:"Emily Wocn",v:"11436"},{t:"Extension",n:"Violeta WOCN",v:"11426"},{t:"Extension",n:"Athena WOCN",v:"14181"},{t:"Extension",n:"PT",v:"65935"},{t:"Extension",n:"OBGYN OB Team",v:"11607"},{t:"Extension",n:"Portable XR",v:"66180"},{t:"Phone number",n:"Nicole Rads Supervisor",v:"10746"},{t:"Extension",n:"RX IV Room",v:"66433"},{t:"Extension",n:"Transfer Center",v:"18887012337"},{t:"Extension",n:"MICU PA/NP Desk",v:"63332"},{t:"Extension",n:"MICU Charge Spectra",v:"11597"},{t:"Extension",n:"MICU Charge Desk",v:"69464"},{t:"Extension",n:"Transport Supervisor",v:"#64000#10600"},{t:"Extension",n:"9 South",v:"7990"},{t:"Extension",n:"7 South Nurse Manager",v:"14475"},{t:"Extension",n:"Navigation",v:"6400"},{t:"Extension",n:"Chris Johnson Materials",v:"11789"},{t:"Phone number",n:"Wound Care Athena",v:"14181"},{t:"Extension",n:"Will (SICU/CTICU) Pharmacist",v:"11410"},{t:"Phone number",n:"Jane Ellen Barr (Spectra)",v:"11594"},{t:"Extension",n:"Biomed Engineering",v:"7520"},{t:"Extension",n:"Engineering",v:"7410"},{t:"Extension",n:"SBIRIT",v:"13039"},{t:"Extension",n:"Lab Direct Number",v:"61010"},{t:"Phone number",n:"New York Blood & Cancer Office",v:"6317513000"},{t:"Extension",n:"9N Social Worker (Rhoda)",v:"11405"},{t:"Extension",n:"NUclear Med",v:"7080"},{t:"Extension",n:"Patient Family Centered Care (PFCC)",v:"8792"},{t:"Extension",n:"Heart Failure Spectra",v:"14040"},{t:"Extension",n:"OR 23",v:"61523"},{t:"Phone number",n:"CFAM front Desk",v:"5167348040"},{t:"Pager",n:"OMFS Pager",v:"00091"},{t:"Phone number",n:"Gynonc",v:"11435"},{t:"Extension",n:"Radiology Tech XR",v:"7162"},{t:"Extension",n:"Ultrasound Tech",v:"7180"},{t:"Extension",n:"6N ICU Charge",v:"11040"},{t:"Phone number",n:"Rads Onc",v:"5163213000"},{t:"Pager",n:"Dental",v:"00007"},{t:"Phone number",n:"Interventional Radiology PA",v:"11662"},{t:"Extension",n:"Neurosurgery",v:"7109"},{t:"Extension",n:"CT Supervisor Kim",v:"14189"},{t:"Extension",n:"IR",v:"4143"},{t:"Extension",n:"Weekend BH SW",v:"11146"},{t:"Extension",n:"Paediatric Emergency Departments",v:"619000"},{t:"Phone number",n:"Vincent ED SW",v:"11173"},{t:"Extension",n:"Pediatric Pharmacy",v:"3420"},{t:"Extension",n:"Dialysis Social Worker",v:"14404"},{t:"Phone number",n:"Rhoda 9N SW Spectra",v:"11405"},{t:"Extension",n:"ED Tele",v:"63453"},{t:"Phone number",n:"9S Fax",v:"7184704308"},{t:"Extension",n:"Radiology tech Ct",v:"69699"},{t:"Extension",n:"ML3 ZHH",v:"8510"},{t:"Extension",n:"Physical Therapy Office",v:"65935"},{t:"Phone number",n:"Micro",v:"9293035200"},{t:"Extension",n:"Materials",v:"7150"},{t:"Extension",n:"Vascular lab",v:"7046"},{t:"Extension",n:"5 South",v:"7950"},{t:"Extension",n:"4 South",v:"7940"},{t:"Pager",n:"Surgery Consults",v:"00047"},{t:"Phone number",n:"EEG Reading Room",v:"5165623034"},{t:"Pager",n:"Nutrition TPN Services",v:"00430"},{t:"Extension",n:"OR",v:"7400"},{t:"Extension",n:"ED Case manager",v:"11771"},{t:"Extension",n:"NICU",v:"3380"},{t:"Extension",n:"Ct",v:"69797"},{t:"Extension",n:"MICU",v:"7860"},{t:"Extension",n:"Anesthesia For Procedures Spectra",v:"14473"},{t:"Phone number",n:"Respiratory Manager",v:"11885"},{t:"Phone number",n:"Core Lab",v:"5167191100"},{t:"Phone number",n:"IR Outpatient Scheduling",v:"7184704143"},{t:"Extension",n:"CT Scan ED",v:"66701"},{t:"Extension",n:"Thien ID (micro) Pharmacist",v:"10525"},{t:"Extension",n:"Safety",v:"4042"},{t:"Extension",n:"Neurology General Team",v:"14141"},{t:"Pager",n:"Neurology Pager New Consult",v:"00024"},{t:"Extension",n:"Neuroradiology",v:"4096"},{t:"Pager",n:"Plastics Pager",v:"00050"},{t:"Pager",n:"Nutrition consult",v:"66657"},{t:"Extension",n:"5S SW - Tiffany",v:"13246"},{t:"Extension",n:"OR scheduling",v:"7472"},{t:"Extension",n:"TEE",v:"7348"},{t:"Extension",n:"Cath Lab Charge Nurse",v:"11890"},{t:"Pager",n:"ASL Interpreter",v:"9178718885"},{t:"Extension",n:"Neuroradiology LP",v:"7703"},{t:"Extension",n:"Thoracic Surgery Consult",v:"11813"},{t:"Extension",n:"CTICU Intensivist",v:"14415"},{t:"Extension",n:"7 South",v:"7970"},{t:"Extension",n:"7 North",v:"7870"},{t:"Extension",n:"5 North",v:"7850"},{t:"Extension",n:"Admitting",v:"7100"},{t:"Phone number",n:"CFAM Molecular Biology Lab",v:"5164166587"},{t:"Extension",n:"EEG Tech",v:"7839"},{t:"Extension",n:"Environmental",v:"11530"},{t:"Phone number",n:"Cytopathology",v:"5163047284"},{t:"Phone number",n:"Stroke Spectra",v:"11196"},{t:"Phone number",n:"HIC",v:"11850"},{t:"Extension",n:"Lab Supervisor",v:"11775"},{t:"Phone number",n:"Endocrine",v:"15167082540"},{t:"Phone number",n:"Diabetes Educator",v:"11337"},{t:"Phone number",n:"CCMC hospitalist",v:"11814"},{t:"Extension",n:"Housekeeping Sup",v:"11530"},{t:"Phone number",n:"Interventional Cardiology PA",v:"14116"},{t:"Phone number",n:"Biomed",v:"7250"},{t:"Phone number",n:"Acute pain",v:"11605"},{t:"Extension",n:"Nuclear Stress Test",v:"69433"},{t:"Extension",n:"MICU (6N) Charge RN",v:"10823"},{t:"Extension",n:"MICU (6N)",v:"5637"},{t:"Phone number",n:"Navigation Supervisor",v:"4258"},{t:"Phone number",n:"Karla (8T NM)",v:"14266"},{t:"Phone number",n:"Safe Patient Handling (Mary)",v:"13049"},{t:"Extension",n:"3med",v:"3340"},{t:"Extension",n:"4med",v:"3140"},{t:"Pager",n:"Anesthesia Acute Pain",v:"00539"},{t:"Extension",n:"Radiology records",v:"61988"},{t:"Extension",n:"Radiation Oncology",v:"69485"},{t:"Extension",n:"EP",v:"11877"},{t:"Pager",n:"Tpn Nurse",v:"99627"},{t:"Extension",n:"Interventional Recovery Room",v:"7600"},{t:"Extension",n:"Histopathology",v:"3060"},{t:"Extension",n:"Operating Room",v:"7400"},{t:"Phone number",n:"Core Lab Microbiology",v:"9293035200"},{t:"Extension",n:"Interventional Radiology General Info",v:"4143"},{t:"Pager",n:"OBGYN consult Pager",v:"00021"},{t:"Extension",n:"ED Charge RN",v:"14170"},{t:"Extension",n:"Pathology",v:"4940"},{t:"Extension",n:"CT scan ER",v:"7614"},{t:"Extension",n:"Lab",v:"7721"},{t:"Extension",n:"SBIRT",v:"11772"},{t:"Phone number",n:"Discharge document Phone Number",v:"7184703377"},{t:"Phone number",n:"Microbiology New",v:"9293035200"},{t:"Pager",n:"Interventional Radiology (IR)",v:"00460"},{t:"Extension",n:"6 Tower",v:"5601"},{t:"Extension",n:"CTICU",v:"5320"},{t:"Extension",n:"MRI",v:"4070"},{t:"Pager",n:"Zucker Psych Intern On Call",v:"06141"},{t:"Extension",n:"ED Discharge Lounge",v:"67725"},{t:"Extension",n:"MRI Tech",v:"4202"},{t:"Extension",n:"6S Nursing Station",v:"7960"},{t:"Extension",n:"8 North",v:"7880"},{t:"Extension",n:"8 Tower",v:"5801"},{t:"Extension",n:"Add-on Labs",v:"7721"},{t:"Extension",n:"Bed board",v:"7106"},{t:"Extension",n:"Beena (EP Team) Spectra",v:"11829"},{t:"Extension",n:"Bone Radiology",v:"4206"},{t:"Extension",n:"CCU",v:"7810"},{t:"Extension",n:"CCU Consults Spectra",v:"11693"},{t:"Extension",n:"CHF Clinic",v:"4360"},{t:"Extension",n:"CT Surgery",v:"7460"},{t:"Extension",n:"Cardiology",v:"7330"},{t:"Extension",n:"Cards Fellow (House) Spectra",v:"11629"},{t:"Extension",n:"Cath Lab",v:"7600"},{t:"Extension",n:"Chest Reading room",v:"4173"},{t:"Extension",n:"Discharge Hotline",v:"7777"},{t:"Extension",n:"ESSU (onc building)",v:"7260"},{t:"Extension",n:"Endoscopy",v:"7282"},{t:"Extension",n:"Feng (EP Team) Spectra",v:"11390"},{t:"Pager",n:"Gastroenterology Pager",v:"00016"},{t:"Extension",n:"Goldner, B (EP) Spectra",v:"11894"},{t:"Extension",n:"HS Team 1 Resident Spectra",v:"11711"},{t:"Extension",n:"Heme/Onc",v:"8930"},{t:"Pager",n:"Hospitalist Pager",v:"00017"},{t:"Extension",n:"Hospitalist Spectra",v:"11850"},{t:"Extension",n:"Human Resources",v:"5167347000"},{t:"Extension",n:"Infectious Disease",v:"7290"},{t:"Extension",n:"MAR Spectra",v:"11518"},{t:"Extension",n:"MICU consult Spectra",v:"7184131745"},{t:"Extension",n:"Nuclear Medicine Nurse spectra#",v:"14086"},{t:"Extension",n:"Operator",v:"5164707000"},{t:"Pager",n:"PM&R (Acute) Pager",v:"00539"},{t:"Extension",n:"PM&R (Acute) Spectra",v:"11605"},{t:"Extension",n:"PM&R (Chronic)",v:"4262"},{t:"Pager",n:"Palliative Care Pager",v:"53110"},{t:"Extension",n:"Pharmacy",v:"7430"},{t:"Extension",n:"Psych Emergency Consult",v:"11791"},{t:"Extension",n:"HS Team 2 resident",v:"11712"},{t:"Extension",n:"HS Team 3 resident",v:"11713"},{t:"Extension",n:"Psychiatry (alt #)",v:"4650"},{t:"Extension",n:"Pulmonary",v:"7230"},{t:"Extension",n:"Radiology supervisor",v:"10746"},{t:"Pager",n:"Renal and HD Pager",v:"00041"},{t:"Extension",n:"Resident in Charge (RIC) Spectra",v:"11817"},{t:"Extension",n:"Respiratory",v:"7680"},{t:"Extension",n:"Respiratory Spectra",v:"10678"},{t:"Extension",n:"Social Work Spectra",v:"11173"},{t:"Extension",n:"Speech/Swallow",v:"8920"},{t:"Extension",n:"Translator Services",v:"8886364315"},{t:"Extension",n:"Urology",v:"7220"},{t:"Pager",n:"Urology Pager",v:"00054"},{t:"Pager",n:"Vascular Pager",v:"00045"},{t:"Extension",n:"Vascular lab (ultrasound)",v:"4252"},{t:"Extension",n:"CDU",v:"7918"},{t:"Extension",n:"Neuroradiology",v:"4095"},{t:"Extension",n:"Dialysis (inpatient)",v:"7820"},{t:"Extension",n:"Microbiology lab",v:"7530"},{t:"Extension",n:"9 Tower",v:"5901"},{t:"Extension",n:"3 North",v:"7830"},{t:"Extension",n:"Blood Bank",v:"7050"},{t:"Extension",n:"Hospice",v:"5168327100"},{t:"Extension",n:"Bedboard",v:"11519"},{t:"Extension",n:"CSSU",v:"7343"},{t:"Extension",n:"Vivo",v:"8486"},{t:"Extension",n:"Medical Records",v:"8429"},{t:"Extension",n:"Release of Records",v:"7329"},{t:"Extension",n:"Radiology office",v:"3456"},{t:"Extension",n:"Tower Pharmacy",v:"5870"},{t:"Extension",n:"Zucker Hillside",v:"8100"},{t:"Extension",n:"Transthoracic Echo",v:"7378"},{t:"Extension",n:"CT Scan inpatient",v:"7163"},{t:"Extension",n:"CT scan inpatient",v:"7168"},{t:"Pager",n:"Podiatry Pager",v:"00200"},{t:"Extension",n:"Humaira Shoaib, MD (psych)",v:"14218"},{t:"Extension",n:"Clinical Impact Nurse",v:"11336"},{t:"Extension",n:"Pathology",v:"5163047284"},{t:"Extension",n:"Emergency Department",v:"7310"},{t:"Extension",n:"Reading room MRI body",v:"7244"},{t:"Extension",n:"Security",v:"7200"},{t:"Extension",n:"Speech and Swallow",v:"10116"},{t:"Extension",n:"Infection Control",v:"3093"},{t:"Extension",n:"Neurology Stroke Team",v:"11196"},{t:"Extension",n:"Nutrition",v:"66590"},{t:"Extension",n:"6 North",v:"7865"},{t:"Extension",n:"PICC line IR",v:"11662"},{t:"Extension",n:"5S Social Worker",v:"14404"},{t:"Extension",n:"Toxicology",v:"5169751300"},{t:"Extension",n:"EEG Monitoring Tech",v:"14246"},{t:"Pager",n:"Portable X-ray Tech",v:"06198"},{t:"Extension",n:"CDU PA",v:"11821"},{t:"Extension",n:"ED RIC",v:"14171"},{t:"Extension",n:"CT Inpatient",v:"7168"},{t:"Extension",n:"Psych - Greenstein",v:"11787"},{t:"Pager",n:"Respiratory Pager",v:"00082"},{t:"Extension",n:"Peds radiology",v:"8656"},{t:"Extension",n:"CT Scan 2nd Floor",v:"7168"},{t:"Extension",n:"RCU",v:"7960"},{t:"Extension",n:"CT Scan",v:"7168"},{t:"Extension",n:"Keith ICU Pharmacist",v:"10683"},{t:"Extension",n:"RCU NP",v:"14243"},{t:"Extension",n:"SICU",v:"5310"},{t:"Extension",n:"MICU Respiratory",v:"10725"},{t:"Extension",n:"PACU",v:"7670"},{t:"Extension",n:"Portable X-ray Tech",v:"7162"},{t:"Extension",n:"Blood Gas Lab",v:"69698"},{t:"Extension",n:"9S Case Management",v:"11493"},{t:"Extension",n:"EP Nurse Practitioner",v:"77444"},{t:"Extension",n:"CT Scan Emergency",v:"66701"},{t:"Extension",n:"IR PICC Nurse",v:"11662"}  
+];
+
+// NSUH entries  
+DATA.nsuh.entries = [  
+{t:"Phone number",n:"Translation",v:"8448442282"},{t:"Phone number",n:"TEE",v:"2636"},{t:"Phone number",n:"Hospitalist in charge",v:"2864"},{t:"Phone number",n:"Echo Lab",v:"5169752072"},{t:"Extension",n:"Radiology - XR",v:"4830"},{t:"Phone number",n:"PICC RN",v:"5169751035"},{t:"Phone number",n:"Pathology",v:"5163047284"},{t:"Extension",n:"IT-",v:"77434"},{t:"Extension",n:"7 Tower",v:"4875"},{t:"Phone number",n:"Medical examiner (alt #)",v:"5165726400"},{t:"Extension",n:"MICU Consult",v:"77742"},{t:"Pager",n:"ENT PA",v:"15169751411"},{t:"Extension",n:"Portable head CT / ED CT Techs",v:"2847"},{t:"Extension",n:"Optium Infectious Disease",v:"5166566500"},{t:"Extension",n:"MRI Front Desk (incl scheduling)",v:"3180"},{t:"Extension",n:"Cath",v:"77868"},{t:"Phone number",n:"Transfer Center",v:"8666942337"},{t:"Extension",n:"Chemistry Lab",v:"4512"},{t:"Extension",n:"MAR 2",v:"77129"},{t:"Extension",n:"MICU Fellow",v:"77749"},{t:"Phone number",n:"Psych Consult",v:"5165624745"},{t:"Pager",n:"Chronic Pain- PCA Pump",v:"5169751023"},{t:"Phone number",n:"Surgery - ACS/Trauma",v:"5169751311"},{t:"Extension",n:"OR 2",v:"65002"},{t:"Extension",n:"Nuclear Medicine Outpatient",v:"4402"},{t:"Phone number",n:"Allergy",v:"5166225070"},{t:"Phone number",n:"Ir Resident Pager",v:"15169750251"},{t:"Phone number",n:"Human Resources",v:"5167347000"},{t:"Phone number",n:"OBGYN Pager",v:"5169751221"},{t:"Extension",n:"Neurosurgery",v:"77478"},{t:"Phone number",n:"Echo Tech (emergencies)",v:"15169752072"},{t:"Phone number",n:"Anesthesia Consult",v:"77131"},{t:"Pager",n:"HIC Pager",v:"5169750113"},{t:"Extension",n:"Bed Board/Logistics",v:"2495"},{t:"Extension",n:"5 Surg / 4 Tower",v:"4633"},{t:"Extension",n:"Apheresis Room - Blood Bank (PLEX)",v:"4205"},{t:"Phone number",n:"MICU Consult Fellow Spectra",v:"77742"},{t:"Extension",n:"PSP OR",v:"4894"},{t:"Phone number",n:"Optum Urology",v:"5167423200"},{t:"Phone number",n:"NY Kidney Physicians - Dr. Khan",v:"7187372820"},{t:"Extension",n:"Materials",v:"4777"},{t:"Phone number",n:"Bronch Booking",v:"5163873969"},{t:"Extension",n:"5 ACE",v:"4007"},{t:"Extension",n:"ED Night ANM",v:"77914"},{t:"Phone number",n:"Chaplain Main Line",v:"4043"},{t:"Pager",n:"Chaplain",v:"5169759054"},{t:"Extension",n:"MICU Yellow",v:"77479"},{t:"Phone number",n:"Micu green",v:"77062"},{t:"Phone number",n:"Vascular CARDIOLOGY Consult",v:"5164276870"},{t:"Pager",n:"Plastic Surgery Resident",v:"5169751798"},{t:"Extension",n:"ACP supervisor",v:"78114"},{t:"Extension",n:"ED Orange",v:"3770"},{t:"Extension",n:"ED Red North",v:"3716"},{t:"Extension",n:"PFCC",v:"4772"},{t:"Phone number",n:"Infectious Disease Consult",v:"5165624282"},{t:"Phone number",n:"Chronic Pain",v:"5165624625"},{t:"Phone number",n:"Ortho pager",v:"5169751337"},{t:"Extension",n:"Clinical Impact Team",v:"77148"},{t:"Extension",n:"Critical Impact Team",v:"77146"},{t:"Extension",n:"CIN",v:"77148"},{t:"Phone number",n:"Neurology New Consult",v:"5169751282"},{t:"Phone number",n:"Neurosurgery",v:"5169751480"},{t:"Phone number",n:"Surgery - Consult",v:"5169751323"},{t:"Extension",n:"Echo Lab",v:"77042"},{t:"Phone number",n:"Midline Nurse",v:"77216"},{t:"Phone number",n:"Cardiology Consult",v:"1234"},{t:"Phone number",n:"Palliative",v:"5169758884"},{t:"Extension",n:"Airstrip Telemetry",v:"70604"},{t:"Phone number",n:"Ziopatch",v:"64140"},{t:"Extension",n:"Admitting/Nameplate",v:"4075"},{t:"Phone number",n:"Medical Examiner",v:"5165725166"},{t:"Extension",n:"CMU",v:"0613"},{t:"Phone number",n:"Optum/Pro health Hospitalist",v:"5166745858"},{t:"Phone number",n:"Optum Endocrinologist",v:"5163905760"},{t:"Extension",n:"9 tower",v:"8940"},{t:"Extension",n:"8 tower",v:"8830"},{t:"Phone number",n:"Pharmacy Stat",v:"77283"},{t:"Phone number",n:"Anesthesia",v:"77117"},{t:"Extension",n:"ADS / ACP Team Supervisor",v:"77538"},{t:"Extension",n:"Endoscopy",v:"4202"},{t:"Phone number",n:"Neurosurgery EMERGENCIES ONLY Spectra",v:"77478"},{t:"Phone number",n:"MICU Other Phone",v:"77479"},{t:"Extension",n:"5 MON / Case Mgr",v:"8517"},{t:"Phone number",n:"SICU-PA",v:"77115"},{t:"Extension",n:"SICU",v:"4725"},{t:"Extension",n:"MAR",v:"77053"},{t:"Extension",n:"Phlebotomy",v:"4225"},{t:"Extension",n:"Neurology Stroke resident",v:"78029"},{t:"Pager",n:"Vascular New Consult",v:"51323"},{t:"Phone number",n:"Hepatology",v:"4664"},{t:"Pager",n:"Surgery - Red",v:"1420"},{t:"Pager",n:"Surgery - Green",v:"1185"},{t:"Pager",n:"Thoracic Surg Consult",v:"1323"},{t:"Pager",n:"Vascular Surgery",v:"1394"},{t:"Pager",n:"Vascular Pager",v:"51394"},{t:"Phone number",n:"Thoracic Surgery",v:"77339"},{t:"Extension",n:"CT Surgery Spectra",v:"77339"},{t:"Extension",n:"Ultrasound",v:"2226"},{t:"Extension",n:"Stat Lab",v:"2382"},{t:"Phone number",n:"Orthotics",v:"5168074748"},{t:"Pager",n:"Urology",v:"9751143"},{t:"Extension",n:"MRI Front Desk",v:"3179"},{t:"Phone number",n:"PM&R",v:"5163216400"},{t:"Extension",n:"Radiology Neuro",v:"1533"},{t:"Phone number",n:"X-ray",v:"77486"},{t:"Extension",n:"Elevator",v:"4266"},{t:"Extension",n:"Same Day",v:"2662"},{t:"Extension",n:"Dr. Kalpesh Amin",v:"5166331455"},{t:"Extension",n:"3 Tower Tele",v:"4364"},{t:"Pager",n:"EEG/Cancel EEG",v:"5169752511"},{t:"Extension",n:"Micu Nurse Manager",v:"77390"},{t:"Extension",n:"EEG",v:"3034"},{t:"Extension",n:"OB",v:"3129"},{t:"Extension",n:"GYN Resident",v:"77470"},{t:"Phone number",n:"Psych Consult",v:"4746"},{t:"Extension",n:"Neurology",v:"77535"},{t:"Extension",n:"Respiratory Main Office",v:"2548"},{t:"Extension",n:"5 Tower",v:"1555"},{t:"Phone number",n:"Respiratory",v:"77407"},{t:"Extension",n:"Neurology Floor",v:"77582"},{t:"Phone number",n:"Speech",v:"77371"},{t:"Extension",n:"Infectious Control",v:"4744"},{t:"Pager",n:"Page",v:"1110"},{t:"Extension",n:"Respiratory In ED",v:"67433"},{t:"Extension",n:"ED X-ray",v:"3766"},{t:"Extension",n:"CDU",v:"3770"},{t:"Phone number",n:"ED Hospitalist",v:"77659"},{t:"Extension",n:"Transplant Hepatology",v:"2483"},{t:"Phone number",n:"Spectra",v:"516684"},{t:"Phone number",n:"Sarah Reynolds",v:"11062"},{t:"Extension",n:"Nursing Educator",v:"77468"},{t:"Extension",n:"IV Nurse",v:"4959"},{t:"Pager",n:"Transplant Surgery",v:"9090"},{t:"Extension",n:"Structural Heart",v:"77061"},{t:"Extension",n:"Cath Lab",v:"2252"},{t:"Extension",n:"ED Navy",v:"3741"},{t:"Extension",n:"Vocera",v:"4987"},{t:"Phone number",n:"Molecular Lab",v:"5167191180"},{t:"Phone number",n:"Microbiology",v:"9293035200"},{t:"Extension",n:"NSiCu",v:"3590"},{t:"Extension",n:"MRI Fax",v:"3561"},{t:"Extension",n:"TPN",v:"77614"},{t:"Extension",n:"IV Team",v:"77681"},{t:"Extension",n:"Echo lab (first Call)",v:"2622"},{t:"Extension",n:"Ambulatory Surgery",v:"8631"},{t:"Extension",n:"Radiology Record",v:"4822"},{t:"Extension",n:"ED",v:"4127"},{t:"Phone number",n:"Operator",v:"5165620100"},{t:"Extension",n:"Card Booking",v:"3944"},{t:"Extension",n:"Fluroscopy",v:"4107"},{t:"Pager",n:"Ortho PA",v:"1409"},{t:"Extension",n:"Acute Pain",v:"1346"},{t:"Extension",n:"Nutrition",v:"4113"},{t:"Extension",n:"Environmental Services",v:"4155"},{t:"Pager",n:"Hospital Medicine",v:"5169750113"},{t:"Phone number",n:"Gastroenterology",v:"5163873990"},{t:"Extension",n:"PICC Team",v:"77216"},{t:"Extension",n:"Neurology Stroke",v:"77821"},{t:"Extension",n:"Xray Tech",v:"77527"},{t:"Extension",n:"X-ray Tech",v:"77527"},{t:"Extension",n:"Acute Pain Service",v:"77966"},{t:"Phone number",n:"MAB Referral",v:"5169186089"},{t:"Phone number",n:"Robert Rahmani",v:"15164498090"},{t:"Phone number",n:"IT",v:"5164707272"},{t:"Extension",n:"OMFS",v:"4525"},{t:"Extension",n:"Maintenance",v:"4235"},{t:"Phone number",n:"EP",v:"5165493929"},{t:"Extension",n:"Dietician",v:"4110"},{t:"Extension",n:"Np Endoscopy Mary Rose",v:"3767"},{t:"Extension",n:"6 Tower",v:"4935"},{t:"Extension",n:"CT Scan Reading Room",v:"2646"},{t:"Extension",n:"Vascular Ultrasound",v:"4385"},{t:"Pager",n:"MICU Respiratory Therapy",v:"51379"},{t:"Extension",n:"Pharmacy Oncology",v:"3869"},{t:"Pager",n:"Respiratory",v:"1830"},{t:"Extension",n:"Venous Ultrasound",v:"4385"},{t:"Extension",n:"RCU",v:"4330"},{t:"Extension",n:"Pacu",v:"4895"},{t:"Extension",n:"9 Monti",v:"8900"},{t:"Extension",n:"L&D",v:"4450"},{t:"Extension",n:"2 Monti",v:"8200"},{t:"Phone number",n:"Radiation Oncology",v:"5163213000"},{t:"Extension",n:"Not Certain",v:"3568"},{t:"Extension",n:"Cardiac Surgery",v:"4970"},{t:"Extension",n:"ED Holding",v:"67047"},{t:"Extension",n:"ED gold",v:"67041"},{t:"Extension",n:"ED Purple",v:"67042"},{t:"Extension",n:"ED Blue",v:"67043"},{t:"Extension",n:"ED Pink",v:"67044"},{t:"Extension",n:"Neurology/ EEG Reading",v:"77535"},{t:"Extension",n:"Morgue",v:"4508"},{t:"Extension",n:"Wound Care",v:"8215"},{t:"Extension",n:"Vascular Ultrasound (Nights & Weekends)",v:"77799"},{t:"Extension",n:"3 COH",v:"4295"},{t:"Extension",n:"IR Resident/Attending Pager",v:"718470509500460"},{t:"Extension",n:"5 Katz",v:"8570"},{t:"Phone number",n:"Core Lab (Blood Cultures)",v:"9293035200"},{t:"Extension",n:"3 COH / Case Mgr",v:"4354"},{t:"Extension",n:"3 COH / Case Mgr",v:"4353"},{t:"Extension",n:"Sunrise IT Help",v:"4707272"},{t:"Phone number",n:"Micro",v:"7191100"},{t:"Extension",n:"6 tower Tele",v:"4557"},{t:"Extension",n:"Discharge Hotline",v:"3311"},{t:"Extension",n:"2 DSU",v:"4870"},{t:"Phone number",n:"Pulmonology Consult Hospitalist",v:"5162147767"},{t:"Extension",n:"6 Monti",v:"8600"},{t:"Extension",n:"PICU",v:"4645"},{t:"Extension",n:"CT Body reading room",v:"2810"},{t:"Extension",n:"Coronary CT",v:"3040"},{t:"Phone number",n:"Structural Cardiology",v:"5166848090"},{t:"Extension",n:"Interventional radiology(IR)",v:"4834"},{t:"Extension",n:"5 Monti",v:"8500"},{t:"Extension",n:"Ccu Fellow",v:"5163138671"},{t:"Extension",n:"Pulmonary consult",v:"77015"},{t:"Extension",n:"Speech",v:"4600"},{t:"Extension",n:"Speech",v:"77867"},{t:"Pager",n:"PICC RN",v:"2145"},{t:"Pager",n:"Dermatology Resident Pager",v:"9750067"},{t:"Extension",n:"Med Rec Pharmacist",v:"78044"},{t:"Phone number",n:"GI Consult",v:"5164062838"},{t:"Extension",n:"HIC",v:"2864"},{t:"Extension",n:"2 Cohen",v:"4705"},{t:"Extension",n:"2 Cohen tele",v:"4880"},{t:"Extension",n:"2 DSU tele",v:"4864"},{t:"Extension",n:"2 DSU/cssu tele",v:"4864"},{t:"Extension",n:"3 DSU",v:"4425"},{t:"Extension",n:"3 DSU tele",v:"4012"},{t:"Extension",n:"3 Tower",v:"4660"},{t:"Extension",n:"4 Cohen",v:"4305"},{t:"Extension",n:"4 DSU",v:"4290"},{t:"Extension",n:"4 Monti",v:"8400"},{t:"Extension",n:"4 monti/Cohen tele",v:"8405"},{t:"Extension",n:"6 tower/monti- 9 monti Tele",v:"8405"},{t:"Extension",n:"7 Tower",v:"5165624875"},{t:"Extension",n:"7 monti",v:"8700"},{t:"Extension",n:"8 MON",v:"8800"},{t:"Extension",n:"8 Monti",v:"8800"},{t:"Extension",n:"Bone marrow",v:"8710"},{t:"Extension",n:"CCU",v:"4340"},{t:"Extension",n:"CSSU",v:"1130"},{t:"Extension",n:"Cardiology Office",v:"5165624100"},{t:"Extension",n:"ED Holding",v:"3764"},{t:"Extension",n:"ED Red Hall",v:"4126"},{t:"Extension",n:"ED Tele",v:"3230"},{t:"Extension",n:"ED War Room",v:"3230"},{t:"Extension",n:"EP Interrogation",v:"5166847588"},{t:"Extension",n:"Electrophysiology Office",v:"2300"},{t:"Extension",n:"MICU",v:"1624"},{t:"Extension",n:"Medicine Team 1 Intern A",v:"5166847051"},{t:"Extension",n:"Medicine Team 1 Intern B",v:"5166847561"},{t:"Extension",n:"Medicine Team 1 Resident",v:"5166847579"},{t:"Extension",n:"CT Surg Outpt",v:"4970"},{t:"Extension",n:"Medicine Team 2 Intern A",v:"5166847552"},{t:"Extension",n:"Medicine Team 2 Intern B",v:"5166847052"},{t:"Extension",n:"Medicine Team 2 Resident",v:"5166847566"},{t:"Extension",n:"Medicine Team 3 Intern A",v:"5166847555"},{t:"Extension",n:"Medicine Team 3 Intern B",v:"5166847054"},{t:"Extension",n:"Medicine Team 3 Resident",v:"5166847559"},{t:"Extension",n:"Medicine Team 4 Intern A",v:"5166847129"},{t:"Extension",n:"Medicine Team 4 Intern B",v:"5166847576"},{t:"Extension",n:"Medicine Team 5 Intern A",v:"5166847558"},{t:"Extension",n:"Medicine Team 5 Resident",v:"5166847569"},{t:"Extension",n:"Medicine Team 6 Intern A",v:"5166847556"},{t:"Extension",n:"Medicine Team 6 Resident",v:"5166847134"},{t:"Extension",n:"Medicine Team 7 Intern A",v:"5166847583"},{t:"Extension",n:"Medicine Team 7 Intern B",v:"5166847573"},{t:"Extension",n:"Medicine Team 7 Resident",v:"5166847577"},{t:"Extension",n:"Medicine Team 8 Intern A",v:"5166847047"},{t:"Extension",n:"Medicine Team 8 Resident",v:"5166847053"},{t:"Extension",n:"Team 4 Medicine Resident",v:"5166847570"},{t:"Extension",n:"Histopathology",v:"1561"},{t:"Extension",n:"3 Cohen",v:"4295"},{t:"Extension",n:"Lab",v:"4242"},{t:"Extension",n:"Radiology Reading Room",v:"2646"},{t:"Extension",n:"Radiology/Ultrasound",v:"3609"},{t:"Extension",n:"Pharmacy",v:"4700"},{t:"Extension",n:"Blood Bank",v:"4200"},{t:"Extension",n:"CT scan",v:"2266"},{t:"Extension",n:"Cardiothoracic Radiology",v:"4035"},{t:"Extension",n:"Endoscopy",v:"4988"},{t:"Extension",n:"Ultrasound",v:"2270"},{t:"Extension",n:"X-ray",v:"77831"},{t:"Extension",n:"Psych consult",v:"4745"},{t:"Extension",n:"Vivo",v:"8486"},{t:"Extension",n:"8 ICU",v:"4725"},{t:"Extension",n:"Nuclear medicine inpatient",v:"4406"},{t:"Extension",n:"PCU",v:"3015"},{t:"Extension",n:"Core Lab",v:"5167191100"},{t:"Extension",n:"Infectious disease",v:"4280"},{t:"Extension",n:"ENT spectra",v:"77145"},{t:"Extension",n:"Radiology reading room",v:"4035"},{t:"Extension",n:"Dialysis",v:"4380"},{t:"Extension",n:"Occupational therapy",v:"4710"},{t:"Extension",n:"CT scan",v:"2269"},{t:"Extension",n:"Hematology Lab",v:"2250"},{t:"Extension",n:"Hospice",v:"8270"},{t:"Extension",n:"EP charge nurse",v:"77017"},{t:"Extension",n:"EP interrogation",v:"77588"},{t:"Extension",n:"HIC",v:"77389"},{t:"Extension",n:"Toxicology",v:"5169751300"},{t:"Extension",n:"Infectious Disease Consult",v:"2584"},{t:"Extension",n:"Nuclear Stress Lab",v:"4140"},{t:"Extension",n:"OR Front Desk",v:"4890"},{t:"Extension",n:"OR 6",v:"6676"},{t:"Extension",n:"OR 1",v:"6885"},{t:"Extension",n:"Physical Therapy",v:"4710"},{t:"Extension",n:"MRI",v:"3894"},{t:"Extension",n:"CTICU",v:"4910"},{t:"Extension",n:"Medical Records",v:"4262"},{t:"Extension",n:"Endocrine Office",v:"5167082538"},{t:"Extension",n:"CV Surg Consult",v:"77377"},{t:"Extension",n:"Thoracic Surg Consult",v:"77339"},{t:"Pager",n:"OBGYN",v:"1222"},{t:"Extension",n:"IR Booking Office",v:"4677"},{t:"Pager",n:"Podiatry",v:"9750019"},{t:"Extension",n:"Pain Mgmt - Chronic",v:"4625"}  
+];
+
+// ================================================================  
+//  STATE  
+// ================================================================  
+let state = {  
+    hospital: 'all',  
+    type: 'all',  
+    search: '',  
+    favorites: JSON.parse(localStorage.getItem('dir_favs') || '[]')  
+};
+
+// ================================================================  
+//  HELPERS  
+// ================================================================  
+const $ = id => document.getElementById(id);  
+const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&','<':'<','>':'>','"':'"',"'":"'"}[c]));  
+const escRx = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+function favKey(hid, e) { return hid + '|' + e.n + '|' + e.v; }  
+function isFav(hid, e) { return state.favorites.includes(favKey(hid, e)); }
+
+function toggleFav(hid, e) {  
+    const k = favKey(hid, e);  
+    const i = state.favorites.indexOf(k);  
+    if (i > -1) { state.favorites.splice(i, 1); toast('Removed from favorites'); }  
+    else { state.favorites.push(k); toast('⭐ Added to favorites'); }  
+    localStorage.setItem('dir_favs', JSON.stringify(state.favorites));  
+    render();  
+}
+
+function typeClass(t) {  
+    return t === 'Extension' ? 't-ext' : t === 'Phone number' ? 't-phone' : 't-pager';  
+}
+
+function typeIcon(t) {  
+    return t === 'Extension' ? '📟' : t === 'Phone number' ? '📱' : '📄';  
+}
+
+function typeLabel(t) {  
+    return t === 'Phone number' ? 'Phone' : t;  
+}
+
+function highlight(text, term) {  
+    if (!term) return esc(text);  
+    const e = esc(text);  
+    return e.replace(new RegExp('(' + escRx(esc(term)) + ')', 'gi'), '<mark>$1</mark>');  
+}
+
+function copyVal(val, el) {  
+    if (navigator.clipboard) {  
+        navigator.clipboard.writeText(val).catch(() => {});  
+    } else {  
+        const ta = document.createElement('textarea');  
+        ta.value = val;  
+        ta.style.cssText = 'position:fixed;left:-9999px';  
+        document.body.appendChild(ta);  
+        ta.select();  
+        try { document.execCommand('copy'); } catch(e) {}  
+        document.body.removeChild(ta);  
+    }  
+    toast('📋 Copied: ' + val);  
+    if (el) { el.classList.add('flash-copied'); setTimeout(() => el.classList.remove('flash-copied'), 500); }  
+}
+
+let toastTimer;  
+function toast(msg) {  
+    const el = $('toast');  
+    el.textContent = msg;  
+    el.classList.add('visible');  
+    clearTimeout(toastTimer);  
+    toastTimer = setTimeout(() => el.classList.remove('visible'), 2000);  
+}
+
+// ================================================================  
+//  INIT UI  
+// ================================================================  
+function initTabs() {  
+    const all = DATA.lij.entries.length + DATA.nsuh.entries.length;  
+    $('tabRow').innerHTML = `  
+        <button class="tab-btn active" data-h="all" onclick="setHospital('all')">  
+            <span class="tab-emoji">📋</span>All<span class="tab-count">${all}</span>  
+        </button>  
+        <button class="tab-btn" data-h="lij" onclick="setHospital('lij')">  
+            <span class="tab-emoji">🏥</span>LIJ Medical<span class="tab-count">${DATA.lij.entries.length}</span>  
+        </button>  
+        <button class="tab-btn" data-h="nsuh" onclick="setHospital('nsuh')">  
+            <span class="tab-emoji">🏥</span>North Shore<span class="tab-count">${DATA.nsuh.entries.length}</span>  
+        </button>  
+    `;
+
+    $('filterRow').innerHTML = `  
+        <button class="filter-btn active" data-f="all" onclick="setType('all')">All Types</button>  
+        <button class="filter-btn" data-f="Extension" onclick="setType('Extension')">📟 Extensions</button>  
+        <button class="filter-btn" data-f="Phone number" onclick="setType('Phone number')">📱 Phone</button>  
+        <button class="filter-btn" data-f="Pager" onclick="setType('Pager')">📄 Pager</button>  
+        <button class="filter-btn" data-f="favorites" onclick="setType('favorites')">⭐ Favorites</button>  
+    `;  
+}
+
+// ================================================================  
+//  FILTER  
+// ================================================================  
+function getFiltered() {  
+    const keys = state.hospital === 'all' ? ['lij','nsuh'] : [state.hospital];  
+    const out = {};
+
+    keys.forEach(hk => {  
+        const h = DATA[hk];  
+        let list = h.entries.filter(e => {  
+            if (state.type === 'favorites') { if (!isFav(hk, e)) return false; }  
+            else if (state.type !== 'all' && e.t !== state.type) return false;
+
+            if (state.search) {  
+                const s = state.search.toLowerCase();  
+                if (!e.n.toLowerCase().includes(s) && !e.v.toLowerCase().includes(s) && !e.t.toLowerCase().includes(s)) return false;  
+            }  
+            return true;  
+        });
+
+        list.sort((a, b) => {  
+            const fa = isFav(hk, a) ? 0 : 1;  
+            const fb = isFav(hk, b) ? 0 : 1;  
+            if (fa !== fb) return fa - fb;  
+            return a.n.localeCompare(b.n, undefined, {sensitivity: 'base'});  
+        });
+
+        out[hk] = list;  
+    });
+
+    return out;  
+}
+
+// ================================================================  
+//  RENDER  
+// ================================================================  
+function render() {  
+    const filtered = getFiltered();  
+    const keys = state.hospital === 'all' ? ['lij','nsuh'] : [state.hospital];  
+    const showHospTag = keys.length > 1;
+
+    let total = 0, cExt = 0, cPh = 0, cPg = 0;  
+    let html = '';
+
+    keys.forEach(hk => {  
+        const entries = filtered[hk];  
+        const h = DATA[hk];  
+        total += entries.length;  
+        entries.forEach(e => { if(e.t==='Extension') cExt++; else if(e.t==='Phone number') cPh++; else cPg++; });
+
+        if (entries.length === 0 && keys.length > 1) return;
+
+        // Hospital divider  
+        html += `<div class="hospital-group">  
+            <div class="hospital-divider ${h.badge}">  
+                <span class="hosp-badge ${h.badge}">${h.icon} ${h.name}</span>  
+                <span class="hosp-count">${entries.length} ${entries.length === 1 ? 'entry' : 'entries'}</span>  
+            </div>`;
+
+        if (entries.length === 0) {  
+            html += `<div class="empty">  
+                <div class="empty-circle">🔍</div>  
+                <h3>No results found</h3>  
+                <p>Try adjusting your search or filters</p>  
+            </div>`;  
+        } else {  
+            // Group by first letter  
+            const groups = {};  
+            entries.forEach(e => {  
+                const letter = (e.n.match(/[a-zA-Z]/) || ['#'])[0].toUpperCase();  
+                const key = /[A-Z]/.test(letter) ? letter : '#';  
+                if (!groups[key]) groups[key] = [];  
+                groups[key].push(e);  
+            });
+
+            const sortedLetters = Object.keys(groups).sort((a,b) => {  
+                if (a === '#') return 1;  
+                if (b === '#') return -1;  
+                return a.localeCompare(b);  
+            });
+
+            sortedLetters.forEach(letter => {  
+                html += `<div class="letter-header">  
+                    <div class="letter-circle">${letter}</div>  
+                    <span class="letter-count">${groups[letter].length}</span>  
+                    <div class="letter-line"></div>  
+                </div>  
+                <div class="entries-list">`;
+
+                groups[letter].forEach(e => {  
+                    const tc = typeClass(e.t);  
+                    const safeVal = e.v.replace(/'/g, "\\'");  
+                    const fav = isFav(hk, e);
+
+                    html += `<div class="entry ${tc}" onclick="copyVal('${safeVal}', this)">  
+                        <div class="entry-icon-box ${tc}">${typeIcon(e.t)}</div>  
+                        <div class="entry-body">  
+                            <div class="entry-name">${highlight(e.n, state.search)}</div>  
+                            <div class="entry-tags">  
+                                <span class="tag ${tc}">${typeLabel(e.t)}</span>  
+                                ${showHospTag ? `<span class="tag-hosp">${h.short}</span>` : ''}  
+                            </div>  
+                        </div>  
+                        <div class="entry-end">  
+                            <span class="entry-value">${highlight(e.v, state.search)}</span>  
+                            <div class="copy-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></div>  
+                        </div>  
+                        <button class="fav-star ${fav?'on':''}" onclick="event.stopPropagation();handleFav('${hk}','${safeVal}','${e.n.replace(/'/g,"\\'")}')" aria-label="Favorite">⭐</button>  
+                    </div>`;  
+                });
+
+                html += '</div>';  
+            });  
+        }
+
+        html += '</div>';  
+    });
+
+    if (total === 0 && keys.length <= 1) {  
+        // handled above  
+    } else if (total === 0) {  
+        html = `<div class="empty">  
+            <div class="empty-circle">🔍</div>  
+            <h3>No results found</h3>  
+            <p>Try different search terms or change filters</p>  
+        </div>`;  
+    }
+
+    $('content').innerHTML = html;  
+    $('liveCount').textContent = total + (total === 1 ? ' result' : ' results');  
+    $('statExt').textContent = cExt;  
+    $('statPhone').textContent = cPh;  
+    $('statPager').textContent = cPg;  
+}
+
+// Global handlers  
+window.handleFav = function(hk, val, name) {  
+    const h = DATA[hk];  
+    const e = h.entries.find(x => x.v === val && x.n === name);  
+    if (e) toggleFav(hk, e);  
+};
+
+window.setHospital = function(h) {  
+    state.hospital = h;  
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.h === h));  
+    render();  
+};
+
+window.setType = function(t) {  
+    state.type = t;  
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.f === t));  
+    render();  
+};
+
+window.copyVal = copyVal;
+
+// Search  
+const si = $('searchInput');  
+const cb = $('clearBtn');  
+let debounce;
+
+si.addEventListener('input', () => {  
+    state.search = si.value.trim();  
+    cb.classList.toggle('visible', state.search.length > 0);  
+    clearTimeout(debounce);  
+    debounce = setTimeout(render, 80);  
+});
+
+cb.addEventListener('click', () => {  
+    si.value = '';  
+    state.search = '';  
+    cb.classList.remove('visible');  
+    si.focus();  
+    render();  
+});
+
+// Keyboard shortcut  
+document.addEventListener('keydown', e => {  
+    if (e.key === '/' && document.activeElement !== si) { e.preventDefault(); si.focus(); }  
+    if (e.key === 'Escape' && document.activeElement === si) si.blur();  
+});
+
+// Mobile: hide keyboard hint  
+if ('ontouchstart' in window) $('kbdHint').style.display = 'none';
+
+// Scroll to top button  
+const stb = $('scrollTopBtn');  
+stb.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+let raf;  
+window.addEventListener('scroll', () => {  
+    if (!raf) raf = requestAnimationFrame(() => {  
+        stb.classList.toggle('visible', window.scrollY > 350);  
+        raf = null;  
+    });  
+}, { passive: true });
+
+// ================================================================  
+//  BOOT  
+// ================================================================  
+initTabs();  
+render();  
+</script>  
+</body>  
+</html>  
